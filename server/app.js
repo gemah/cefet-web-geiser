@@ -29,8 +29,8 @@ app.get('/', function(req, res){
 // dica: o handler desta função pode chegar a ter umas 15 linhas de código
 app.get('/jogador/:id', function (req, res) {
 	var id = req.params['id'];
-	var jogador = _.find(db.jogadores, function(jog){return jog.steamid == id;});
-	var jogos = _.map(_.sortBy(db.jogosPorJogador[id], function(j){return -j.playtime_forever;}), function (jogo){
+	var jogador = _.find(db.jogadores.players, function(jog){return jog.steamid == id;});
+	var jogos = _.map(_.sortBy(db.jogosPorJogador[id].games, function(j){return -j.playtime_forever;}), function (jogo){
 		return {
 			appid: jogo.appid,
 			name: jogo.name,
@@ -39,14 +39,14 @@ app.get('/jogador/:id', function (req, res) {
 		};
 	});
 	
-	res.render('db',{
+	res.render('jogador',{
 		steamid: jogador.steamid,
 		avatarmedium: jogador.avatarmedium,
 		personaname: jogador.personaname,
 		loccountrycode: jogador.loccountrycode,
 		realname: jogador.realname,
-		game_count: db[id].jogosPorJogador.game_count,
-		unplayedount: _.where(db.jogosPorJogador[id], {playtime_forever: 0}).length,
+		game_count: db.jogosPorJogador[id].game_count,
+		unplayedcount: _.where(db.jogosPorJogador[id].games, {playtime_forever: 0}).length,
 		favGame: jogos[0],
 		fiveMostPlayed: jogos.slice(0,5)
 	});
