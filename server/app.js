@@ -20,7 +20,7 @@ app.set('views', 'server/views');
 // dica: o handler desta função é bem simples - basta passar para o template
 //       os dados do arquivo data/jogadores.json
 app.get('/', function(req, res){
-	res.render('index', db);
+	res.render('index', db.jogadores);
 });
 
 // definir rota para página de detalhes de um jogador --> renderizar a view
@@ -39,7 +39,7 @@ app.get('/jogador/:id', function (req, res) {
 		};
 	});
 	
-	res.render('jogador',{
+	res.render('db',{
 		steamid: jogador.steamid,
 		avatarmedium: jogador.avatarmedium,
 		personaname: jogador.personaname,
