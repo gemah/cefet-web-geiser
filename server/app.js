@@ -34,7 +34,7 @@ app.get('/jogador/:id', function (req, res) {
 		return {
 			appid: jogo.appid,
 			name: jogo.name,
-			playtime_forever: jogo.playtime_forever,
+			playtime_forever: jogo.playtime_forever/60 | 0,
 			img_logo_url: jogo.img_logo_url
 		};
 	});
